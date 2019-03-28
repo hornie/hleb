@@ -1,6 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2019, The TurtleCoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -55,6 +56,14 @@ public:
           return m_blockFutureTimeLimit;
       }
   }
+  
+  uint64_t memeNumber() const { return m_memeNumber; }
+  uint8_t  debugval() const { return m_debugval; }
+  uint64_t lit() const { return m_lit; }
+  uint64_t memeNumberRUS() const { return m_memeNumberRUS; }
+  uint64_t bigSmoke() const { return m_bigSmoke; }
+  uint64_t blockRewardCalculation() const { return m_blockRewardCalculation; }
+  uint64_t rewardCalc() const { return m_rewardCalc; }
 
   uint64_t moneySupply() const { return m_moneySupply; }
   unsigned int emissionSpeedFactor() const { return m_emissionSpeedFactor; }
@@ -189,6 +198,14 @@ private:
   unsigned int m_emissionSpeedFactor;
   uint64_t m_genesisBlockReward;
 
+  uint64_t m_memeNumber;
+  uint8_t  m_debugval;
+  uint64_t m_lit;
+  uint64_t m_memeNumberRUS;
+  uint64_t m_bigSmoke;
+  uint64_t m_blockRewardCalculation;
+  uint64_t m_rewardCalc;
+  
   size_t m_rewardBlocksWindow;
   uint32_t m_zawyDifficultyBlockIndex;
   size_t m_zawyDifficultyV2;
@@ -273,6 +290,14 @@ public:
   CurrencyBuilder& moneySupply(uint64_t val) { m_currency.m_moneySupply = val; return *this; }
   CurrencyBuilder& emissionSpeedFactor(unsigned int val);
   CurrencyBuilder& genesisBlockReward(uint64_t val) { m_currency.m_genesisBlockReward = val; return *this; }
+  
+  CurrencyBuilder& memeNumber(uint64_t val) { m_currency.m_memeNumber = val; return *this; }
+  CurrencyBuilder& debugval(uint64_t val) { m_currency.m_debugval = val; return *this; }
+  CurrencyBuilder& lit(uint64_t val) { m_currency.m_lit = val; return *this; }
+  CurrencyBuilder& memeNumberRUS(uint64_t val) { m_currency.m_memeNumberRUS = val; return *this; }
+  CurrencyBuilder& bigSmoke(uint64_t val) {m_currency.m_bigSmoke = val; return *this; }
+  CurrencyBuilder& blockRewardCalculation(uint64_t val) { m_currency.m_blockRewardCalculation = val; return *this; }
+  CurrencyBuilder& rewardCalc(uint64_t val) { m_currency.m_rewardCalc = val; return *this; }  
 
   CurrencyBuilder& rewardBlocksWindow(size_t val) { m_currency.m_rewardBlocksWindow = val; return *this; }
   CurrencyBuilder& zawyDifficultyBlockIndex(uint32_t val) { m_currency.m_zawyDifficultyBlockIndex = val; return *this; }
