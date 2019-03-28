@@ -1,5 +1,4 @@
 // Copyright (c) 2018, The TurtleCoin Developers
-// Copyright (c) 2019, The HLEBCoin Developers
 // 
 // Please see the included LICENSE file for more information.
 
@@ -11,10 +10,10 @@
 namespace WalletConfig
 {
     /* The prefix your coins address starts with */
-    const std::string_view addressPrefix = "HLEB";
+    const std::string_view addressPrefix = "TRTL";
 
     /* Your coins 'Ticker', e.g. Monero = XMR, Bitcoin = BTC */
-    const std::string ticker = "HLEB";
+    const std::string ticker = "TRTL";
 
     /* The filename to output the CSV to in save_csv */
     const std::string csvFilename = "transactions.csv";
@@ -24,20 +23,20 @@ namespace WalletConfig
     const std::string addressBookFilename = ".addressBook.json";
 
     /* The name of your deamon */
-    const std::string daemonName = "hlebd";
+    const std::string daemonName = "TurtleCoind";
 
     /* The name to call this wallet */
     const std::string walletName = "zedwallet";
 
     /* The name of service/walletd, the programmatic rpc interface to a
        wallet */
-    const std::string walletdName = "hleb-service";
+    const std::string walletdName = "turtle-service";
 
     /* The full name of your crypto */
     const std::string coinName = std::string(CryptoNote::CRYPTONOTE_NAME);
 
     /* Where can your users contact you for support? E.g. discord */
-    const std::string contactLink = "https://discord.gg/cev66Px";
+    const std::string contactLink = "http://chat.turtlecoin.lol";
 
 
     /* The number of decimals your coin has */
@@ -63,7 +62,7 @@ namespace WalletConfig
     const uint64_t minimumFee = CryptoNote::parameters::MINIMUM_FEE;
 
     /* The minimum amount allowed to be sent - usually 1 (in ATOMIC units!) */
-    const uint64_t minimumSend = 10;
+    const uint64_t minimumSend = 1;
 
     /* Is a mixin of zero disabled on your network? */
     const bool mixinZeroDisabled = true;

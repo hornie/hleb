@@ -1,7 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019, The HLEBCoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -17,13 +16,13 @@
 namespace CryptoNote {
 namespace parameters {
 
-const uint64_t DIFFICULTY_TARGET                             = 15; // seconds
+const uint64_t DIFFICULTY_TARGET                             = 30; // seconds
 
 const uint32_t CRYPTONOTE_MAX_BLOCK_NUMBER                   = 500000000;
 const size_t   CRYPTONOTE_MAX_BLOCK_BLOB_SIZE                = 500000000;
 const size_t   CRYPTONOTE_MAX_TX_SIZE                        = 1000000000;
-const uint64_t CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX       = 5872;
-const uint32_t CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW          = 50;
+const uint64_t CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX       = 3914525;
+const uint32_t CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW          = 40;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT            = 60 * 60 * 2;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V3         = 3 * DIFFICULTY_TARGET;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V4         = 6 * DIFFICULTY_TARGET;
@@ -33,17 +32,17 @@ const size_t   BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V3          = 11;
 
 // MONEY_SUPPLY - total number coins to be generated
 const uint64_t MONEY_SUPPLY                                  = UINT64_C(100000000000000);
-const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                   = 0;
-const size_t   ZAWY_DIFFICULTY_V2                            = 1;
+const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                   = 187000;
+const size_t   ZAWY_DIFFICULTY_V2                            = 0;
 const uint8_t  ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION      = 3;
 
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX                 = 2;
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V2              = 3;
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 4;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX                 = 620000;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V2              = 700000;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 800000;
 
-const uint64_t LWMA_3_DIFFICULTY_BLOCK_INDEX                 = 5;
+const uint64_t LWMA_3_DIFFICULTY_BLOCK_INDEX                 = 2000000;
 
-const unsigned EMISSION_SPEED_FACTOR                         = 21;
+const unsigned EMISSION_SPEED_FACTOR                         = 25;
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
 
 /* Premine amount */
@@ -60,7 +59,7 @@ const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(0);
 --print-genesis-tx --genesis-block-reward-address <premine wallet address>
 
 For example:
-hlebd --print-genesis-tx --genesis-block-reward-address TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW
+TurtleCoind --print-genesis-tx --genesis-block-reward-address TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW
 
 * Take the hash printed, and replace it with the hash below in GENESIS_COINBASE_TX_HEX
 
@@ -69,22 +68,11 @@ hlebd --print-genesis-tx --genesis-block-reward-address TRTLv2Fyavy8CXG8BPEbNeCH
 * You should see your premine appear in the previously generated wallet.
 
 */
-
-//the meme emission section. I would advise you not to touch this if you don't know what you're doing. To disable set ADVANCED_BLOCK_REWARD_CALCULATION to 0
-const uint64_t MEME_NUMBER_RUS								 = 228; // Controls the emission, CYKA BLYAD.
-const uint64_t LIT											 = 100; // tHiS coIn iS lIt(kill me)
-const uint64_t MEME_NUMBER                                   = 42; //feel old yet?
-const uint64_t BIG_SMOKE									 = 9 * 2 + 9 * 10 + (6 + 0.5) + 7 + (45 * 2 + 0.5) + 1; //213. Two number nines, a number nine large, a number six, with extra dip, a number seven, two number forty fives, one with cheese, and a large soda! on a serious note, messes with emission.
-const uint64_t ADVANCED_BLOCK_REWARD_CALCULATION			 = 1; // 0 - return to vanilla emission, 1 - be a man, and stick with this abomination.
-const uint64_t SECOND_EMISSION_SPEED_FACTOR					 = 5; //another one
-const uint8_t  DEBUG_VALUES									 = 0; //used for debugging purposes. for instance displays current block reward in daemon
-//end of the meme emission section
-
 const char     GENESIS_COINBASE_TX_HEX[]                     = "010a01ff000188f3b501029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd088071210142694232c5b04151d9e4c27d31ec7a68ea568b19488cfcb422659a07a0e44dd5";
 static_assert(sizeof(GENESIS_COINBASE_TX_HEX)/sizeof(*GENESIS_COINBASE_TX_HEX) != 1, "GENESIS_COINBASE_TX_HEX must not be empty.");
 
 /* This is the unix timestamp of the first "mined" block (technically block 2, not the genesis block)
-   You can get this value by doing "print_block 2" in hlebd. It is used to know what timestamp
+   You can get this value by doing "print_block 2" in TurtleCoind. It is used to know what timestamp
    to import from when the block height cannot be found in the node or the node is offline. */
 const uint64_t GENESIS_BLOCK_TIMESTAMP                       = 1512800692;
 
@@ -95,9 +83,9 @@ const size_t   CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1  = 10000;
 const size_t   CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_CURRENT = CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE;
 const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
-const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 3;
+const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 2;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(100);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(10);
 
 /* This section defines our minimum and maximum mixin counts required for transactions */
 const uint64_t MINIMUM_MIXIN_V1                              = 0;
@@ -151,7 +139,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1300000;
 
 /* For new projects forked from this code base, this value should be
    changed to 0 to prevent a possible transaction bloat exploit */
-const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 0;
+const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 1400000;
 
 const uint64_t CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS     = 1;
 const uint64_t CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS    = DIFFICULTY_TARGET * CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS;
@@ -166,8 +154,8 @@ const size_t   FUSION_TX_MIN_IN_OUT_COUNT_RATIO              = 4;
 
 const uint32_t UPGRADE_HEIGHT_V2                             = 1;
 const uint32_t UPGRADE_HEIGHT_V3                             = 2;
-const uint32_t UPGRADE_HEIGHT_V4                             = 3; // Upgrade height for CN-Lite Variant 1 switch.
-const uint32_t UPGRADE_HEIGHT_V5                             = 4; // Upgrade height for CN-Turtle Variant 2 Variation HLEB switch.
+const uint32_t UPGRADE_HEIGHT_V4                             = 350000; // Upgrade height for CN-Lite Variant 1 switch.
+const uint32_t UPGRADE_HEIGHT_V5                             = 1200000; // Upgrade height for CN-Turtle Variant 2 switch.
 const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
 
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
@@ -179,18 +167,18 @@ static_assert(UPGRADE_VOTING_WINDOW > 1, "Bad UPGRADE_VOTING_WINDOW");
 /* Block heights we are going to have hard forks at */
 const uint64_t FORK_HEIGHTS[] =
 {
-    0,  // 0
-    1,  // 1
-    2,  // 2
-    3,  // 3
-    4,  // 4
-    5,  // 5
-    6, // 6
-    7, // 7
-    8, // 8
-    9, // 9
-    1000000, // 10
-    1400000, // 11
+    187000,  // 0
+    350000,  // 1
+    440000,  // 2
+    620000,  // 3
+    700000,  // 4
+    800000,  // 5
+    1000000, // 6
+    1200000, // 7
+    1300000, // 8
+    1400000, // 9
+    1600000, // 10
+    1800000, // 11
     2000000, // 12
 };
 
@@ -218,7 +206,7 @@ const char     P2P_NET_DATA_FILENAME[]                       = "p2pstate.bin";
 const char     MINER_CONFIG_FILE_NAME[]                      = "miner_conf.json";
 } // parameters
 
-const char     CRYPTONOTE_NAME[]                             = "HLEBCoin";
+const char     CRYPTONOTE_NAME[]                             = "TurtleCoin";
 
 const uint8_t  TRANSACTION_VERSION_1                         =  1;
 const uint8_t  TRANSACTION_VERSION_2                         =  2;
@@ -237,8 +225,8 @@ const size_t   BLOCKS_IDS_SYNCHRONIZING_DEFAULT_COUNT        =  10000;  //by def
 const uint64_t BLOCKS_SYNCHRONIZING_DEFAULT_COUNT            =  100;    //by default, blocks count in blocks downloading
 const size_t   COMMAND_RPC_GET_BLOCKS_FAST_MAX_COUNT         =  1000;
 
-const int      P2P_DEFAULT_PORT                              =  18522;
-const int      RPC_DEFAULT_PORT                              =  18622;
+const int      P2P_DEFAULT_PORT                              =  11897;
+const int      RPC_DEFAULT_PORT                              =  11898;
 const int      SERVICE_DEFAULT_PORT                          =  8070;
 
 const size_t   P2P_LOCAL_WHITE_PEERLIST_LIMIT                =  1000;
@@ -273,15 +261,17 @@ const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE          = 10;
 const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES               = 100;
 const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT     = 2;
 
-const char     LATEST_VERSION_URL[]                          = "http://latest.hleb.cc";
-const std::string LICENSE_URL                                = "https://github.com/hornie/hleb/blob/master/LICENSE";
+const char     LATEST_VERSION_URL[]                          = "http://latest.turtlecoin.lol";
+const std::string LICENSE_URL                                = "https://github.com/turtlecoin/turtlecoin/blob/master/LICENSE";
 const static   boost::uuids::uuid CRYPTONOTE_NETWORK         =
 {
-    {  0x18, 0x49, 0x94, 0x3b, 0xd4, 0x3a, 0x0b, 0x49, 0x5a, 0xd7, 0x14, 0x1a, 0x04, 0xce, 0x0c, 0x5a  }
+    {  0xb5, 0x0c, 0x4a, 0x6c, 0xcf, 0x52, 0x57, 0x41, 0x65, 0xf9, 0x91, 0xa4, 0xb6, 0xc1, 0x43, 0xe9  }
 };
 
 const char* const SEED_NODES[] = {
-  "149.154.69.143:18522",
-  "149.154.69.139:18522"
+  "206.189.142.142:11897",//rock
+  "145.239.88.119:11999", //cision
+  "142.44.242.106:11897", //tom
+  "165.227.252.132:11897" //iburnmycd
 };
 } // CryptoNote
