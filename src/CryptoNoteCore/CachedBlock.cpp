@@ -67,7 +67,7 @@ const Crypto::Hash& CachedBlock::getBlockLongHash() const {
     } else if (block.majorVersion >= BLOCK_MAJOR_VERSION_6) {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
-      cn_soft_shell_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get(), height);
+      cn_soft_shell_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get(), getBlockIndex());
     }
 	
 	else {

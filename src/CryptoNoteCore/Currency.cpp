@@ -451,7 +451,7 @@ uint64_t Currency::getNextDifficulty(uint8_t version, uint32_t blockIndex, std::
     {
         return nextDifficultyV5(timestamps, cumulativeDifficulties);
     }
-    else if (blockIndex >= CryptoNote::parameters::LWMA_2_DIFFICULTY_BLOCK_INDEX_V2)
+    if (blockIndex >= CryptoNote::parameters::LWMA_2_DIFFICULTY_BLOCK_INDEX_V2)
     {
         return nextDifficultyV4(timestamps, cumulativeDifficulties);
     }
