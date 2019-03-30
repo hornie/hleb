@@ -205,7 +205,7 @@ int main(int argc, char* argv[])
     // configure logging
     logManager->configure(buildLoggerConfiguration(cfgLogLevel, cfgLogFile.string()));
 
-    logger(INFO, BRIGHT_GREEN) << getProjectCLIHeader() << std::endl;
+    logger(INFO, BRIGHT_YELLOW) << getProjectCLIHeader() << std::endl;
 
     logger(INFO) << "Program Working Directory: " << cwdPath;
 
