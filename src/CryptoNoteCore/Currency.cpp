@@ -638,6 +638,7 @@ bool Currency::checkProofOfWork(const CachedBlock& block, uint64_t currentDiffic
   case BLOCK_MAJOR_VERSION_3:
   case BLOCK_MAJOR_VERSION_4:
   case BLOCK_MAJOR_VERSION_5:
+  case BLOCK_MAJOR_VERSION_6:
     return checkProofOfWorkV2(block, currentDiffic);
   }
 

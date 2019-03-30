@@ -11,7 +11,7 @@
 namespace WalletConfig
 {
     /* The prefix your coins address starts with */
-    const std::string_view addressPrefix = "HLEB";
+    const std::string_view addressPrefix = "hB";
 
     /* Your coins 'Ticker', e.g. Monero = XMR, Bitcoin = BTC */
     const std::string ticker = "HLEB";
@@ -46,7 +46,7 @@ namespace WalletConfig
 
 
     /* The length of a standard address for your coin */
-    const uint16_t standardAddressLength = 99;
+    const uint16_t standardAddressLength = 97;
 
     /* The length of an integrated address for your coin - It's the same as
        a normal address, but there is a paymentID included in there - since
