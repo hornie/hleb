@@ -79,7 +79,7 @@ const uint64_t SECOND_EMISSION_SPEED_FACTOR					 = 3; //another one
 const uint8_t  DEBUG_VALUES									 = 0; //used for debugging purposes. for instance displays current block reward in daemon
 //end of the meme emission section
 
-const char     GENESIS_COINBASE_TX_HEX[]                     = "010a01ff000188f3b501029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd088071210142694232c5b04151d9e4c27d31ec7a68ea568b19488cfcb422659a07a0e44dd5";
+const char     GENESIS_COINBASE_TX_HEX[]                     = "013201ff0001a0a8b802029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd08807121010745559ae894ef733f15ac6ecfab28002b5554d7cc41c15f6470d692ca41089b";
 static_assert(sizeof(GENESIS_COINBASE_TX_HEX)/sizeof(*GENESIS_COINBASE_TX_HEX) != 1, "GENESIS_COINBASE_TX_HEX must not be empty.");
 
 /* This is the unix timestamp of the first "mined" block (technically block 2, not the genesis block)
