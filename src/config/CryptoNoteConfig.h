@@ -70,7 +70,7 @@ hlebd --print-genesis-tx --genesis-block-reward-address TRTLv2Fyavy8CXG8BPEbNeCH
 */
 
 //the meme emission section. I would advise you not to touch this if you don't know what you're doing. To disable set ADVANCED_BLOCK_REWARD_CALCULATION to 0
-const uint64_t MEME_NUMBER_RUS								 = 228; // Controls the emission, CYKA BLYAD.
+const uint64_t MEME_NUMBER_RUS								 = 228; // does nothing.
 const uint64_t LIT											 = 100; // tHiS coIn iS lIt(kill me)
 const uint64_t MEME_NUMBER                                   = 42; //feel old yet?
 const uint64_t BIG_SMOKE									 = 9 * 2 + 9 * 10 + (6 + 0.5) + 7 + (45 * 2 + 0.5) + 1; //213. Two number nines, a number nine large, a number six, with extra dip, a number seven, two number forty fives, one with cheese, and a large soda! on a serious note, messes with emission.
@@ -240,7 +240,7 @@ const size_t   COMMAND_RPC_GET_BLOCKS_FAST_MAX_COUNT         =  1000;
 
 const int      P2P_DEFAULT_PORT                              =  18522;
 const int      RPC_DEFAULT_PORT                              =  18622;
-const int      SERVICE_DEFAULT_PORT                          =  8177;
+const int      SERVICE_DEFAULT_PORT                          =  18322;
 
 const size_t   P2P_LOCAL_WHITE_PEERLIST_LIMIT                =  1000;
 const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
