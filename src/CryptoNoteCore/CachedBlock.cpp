@@ -8,9 +8,15 @@
 #include <Common/Varint.h>
 #include <config/CryptoNoteConfig.h>
 #include "CryptoNoteTools.h"
+#include <iostream>
+//#include <Logging/LoggerRef.h>
+//#include <Logging/LoggerMessage.h>
+
 
 using namespace Crypto;
 using namespace CryptoNote;
+//using namespace Logging;
+
 
 CachedBlock::CachedBlock(const BlockTemplate& block) : block(block) {
 }
@@ -48,23 +54,63 @@ const Crypto::Hash& CachedBlock::getBlockHash() const {
 
 const Crypto::Hash& CachedBlock::getBlockLongHash() const {
   if (!blockLongHash.is_initialized()) {
-    if (block.majorVersion == BLOCK_MAJOR_VERSION_1) {
+    if (block.majorVersion == BLOCK_MAJOR_VERSION_1 && CryptoNote::parameters::DEBUG_VALUES == 0) {
       const auto& rawHashingBlock = getBlockHashingBinaryArray();
       blockLongHash = Hash();
       cn_slow_hash_v0(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
-    } else if ((block.majorVersion == BLOCK_MAJOR_VERSION_2) || (block.majorVersion == BLOCK_MAJOR_VERSION_3)) {
+    } else if ((block.majorVersion == BLOCK_MAJOR_VERSION_2 && CryptoNote::parameters::DEBUG_VALUES == 0) || (block.majorVersion == BLOCK_MAJOR_VERSION_3 && CryptoNote::parameters::DEBUG_VALUES == 0)) {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
       cn_slow_hash_v0(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
-    } else if (block.majorVersion == BLOCK_MAJOR_VERSION_4) {
+    } else if (block.majorVersion == BLOCK_MAJOR_VERSION_4 && CryptoNote::parameters::DEBUG_VALUES == 0) {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
       cn_lite_slow_hash_v1(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
-    } else if (block.majorVersion >= BLOCK_MAJOR_VERSION_5) {
+    } else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && CryptoNote::parameters::DEBUG_VALUES == 0) {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
       cn_turtle_lite_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
-    } else {
+    } else if (block.majorVersion >= BLOCK_MAJOR_VERSION_6 && CryptoNote::parameters::DEBUG_VALUES == 0) {
+      const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
+      blockLongHash = Hash();
+      cn_soft_shell_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get(), getBlockIndex());
+    }
+	// debug thing
+	else if (block.majorVersion == BLOCK_MAJOR_VERSION_1 && CryptoNote::parameters::DEBUG_VALUES == 1) {
+		const auto& rawHashingBlock = getBlockHashingBinaryArray();
+		blockLongHash = Hash();
+		cn_slow_hash_v0(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
+		std::cout << "Now using " << "cn_slow_hash_v0: " << cn_slow_hash_v2 << std::endl;
+	}
+	else if ((block.majorVersion == BLOCK_MAJOR_VERSION_2 && CryptoNote::parameters::DEBUG_VALUES == 1) || (block.majorVersion == BLOCK_MAJOR_VERSION_3 && CryptoNote::parameters::DEBUG_VALUES == 1)) {
+		const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
+		blockLongHash = Hash();
+		cn_slow_hash_v0(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
+		std::cout << "Now using " << "cn_slow_hash_v0: " << cn_slow_hash_v2 << std::endl;
+	}
+	else if (block.majorVersion == BLOCK_MAJOR_VERSION_4 && CryptoNote::parameters::DEBUG_VALUES == 1) {
+		const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
+		blockLongHash = Hash();
+		cn_lite_slow_hash_v1(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
+		std::cout << "Now using " << "cn_lite_slow_hash_v1: " << cn_slow_hash_v2 << std::endl;
+	}
+	else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && CryptoNote::parameters::DEBUG_VALUES == 1) {
+		const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
+		blockLongHash = Hash();
+		cn_turtle_lite_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
+		std::cout << "Now using " << "cn_turtle_lite_slow_hash_v2: " << cn_slow_hash_v2 << std::endl;
+	}
+	else if (block.majorVersion >= BLOCK_MAJOR_VERSION_6 && CryptoNote::parameters::DEBUG_VALUES == 1) {
+		const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
+		blockLongHash = Hash();
+		cn_soft_shell_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get(), getBlockIndex());
+		std::cout << "Now using " << "cn_soft_shell_slow_hash_v2: " << cn_slow_hash_v2 << std::endl;
+		//Logging::LoggerMessage::logger(INFO, BRIGHT_BLUE) << "Now using " << "cn_soft_shell_slow_hash_v2: " << cn_slow_hash_v2 << std::endl;
+		//primitive logging for now, bc im lazy
+	}
+	//end of debug thing
+	
+	else {
       throw std::runtime_error("Unknown block major version.");
     }
   }

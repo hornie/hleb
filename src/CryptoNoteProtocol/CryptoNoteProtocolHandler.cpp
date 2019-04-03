@@ -1,6 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2019, The HLEBCoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -777,7 +778,7 @@ bool CryptoNoteProtocolHandler::on_connection_synchronized() {
       logger(INFO, WHITE) << " If you need more assistance, you can contact us for support at " + WalletConfig::contactLink << ENDL;
       logger(INFO, BRIGHT_MAGENTA) << "===================================================" << ENDL << ENDL ;
 
-      logger(INFO, BRIGHT_GREEN) << asciiArt << ENDL;
+      logger(INFO, BRIGHT_YELLOW) << asciiArt << ENDL;
 
     m_observerManager.notify(&ICryptoNoteProtocolObserver::blockchainSynchronized, m_core.getTopBlockIndex());
   }
@@ -978,7 +979,7 @@ void CryptoNoteProtocolHandler::updateObservedHeight(uint32_t peerHeight, const 
     std::lock_guard<std::mutex> lock(m_blockchainHeightMutex);
     if (peerHeight > m_blockchainHeight) {
       m_blockchainHeight = peerHeight;
-      logger(Logging::INFO, Logging::BRIGHT_GREEN) << "New Top Block Detected: " << peerHeight;
+      logger(Logging::INFO, Logging::BRIGHT_YELLOW) << "New Top Block Detected: " << peerHeight;
     }
   }
 

@@ -2,6 +2,7 @@
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2014-2018, The Aeon Project
 // Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2019, The HLEBCoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -33,8 +34,8 @@
 
 // CryptoNight Soft Shell Definitions
 #define CN_SOFT_SHELL_MEMORY            262144 // This defines the lowest memory utilization for our curve
-#define CN_SOFT_SHELL_WINDOW            2048 // This defines how many blocks we cycle through as part of our algo sine wave
-#define CN_SOFT_SHELL_MULTIPLIER        3 // This defines how big our steps are for each block and
+#define CN_SOFT_SHELL_WINDOW            512 // This defines how many blocks we cycle through as part of our algo sine wave
+#define CN_SOFT_SHELL_MULTIPLIER        2 // This defines how big our steps are for each block and
                                           // ultimately determines how big our sine wave is. A smaller value means a bigger wave
 #define CN_SOFT_SHELL_ITER              (CN_SOFT_SHELL_MEMORY / 2)
 #define CN_SOFT_SHELL_PAD_MULTIPLIER    (CN_SOFT_SHELL_WINDOW / CN_SOFT_SHELL_MULTIPLIER)
@@ -151,6 +152,7 @@ namespace Crypto {
     }
 
     uint32_t scratchpad = CN_SOFT_SHELL_MEMORY + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_PAD_MULTIPLIER);
+	scratchpad = (static_cast<uint64_t>(scratchpad / 128)) * 128;
     uint32_t iterations = CN_SOFT_SHELL_ITER + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_ITER_MULTIPLIER);
     uint32_t pagesize = scratchpad;
 
@@ -165,6 +167,7 @@ namespace Crypto {
     }
 
     uint32_t scratchpad = CN_SOFT_SHELL_MEMORY + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_PAD_MULTIPLIER);
+	scratchpad = (static_cast<uint64_t>(scratchpad / 128)) * 128;
     uint32_t iterations = CN_SOFT_SHELL_ITER + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_ITER_MULTIPLIER);
     uint32_t pagesize = scratchpad;
 
@@ -179,6 +182,7 @@ namespace Crypto {
     }
 
     uint32_t scratchpad = CN_SOFT_SHELL_MEMORY + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_PAD_MULTIPLIER);
+	scratchpad = (static_cast<uint64_t>(scratchpad / 128)) * 128;
     uint32_t iterations = CN_SOFT_SHELL_ITER + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_ITER_MULTIPLIER);
     uint32_t pagesize = scratchpad;
 

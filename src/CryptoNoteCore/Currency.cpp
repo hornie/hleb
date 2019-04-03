@@ -1,6 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2019, The HLEBCoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -161,6 +162,8 @@ uint32_t Currency::upgradeHeight(uint8_t majorVersion) const {
     return m_upgradeHeightV4;
   } else if (majorVersion == BLOCK_MAJOR_VERSION_5) {
     return m_upgradeHeightV5;
+  } else if (majorVersion == BLOCK_MAJOR_VERSION_6) {
+    return m_upgradeHeightV6;
   } else {
     return static_cast<uint32_t>(-1);
   }
@@ -171,10 +174,26 @@ bool Currency::getBlockReward(uint8_t blockMajorVersion, size_t medianSize, size
   assert(alreadyGeneratedCoins <= m_moneySupply);
   assert(m_emissionSpeedFactor > 0 && m_emissionSpeedFactor <= 8 * sizeof(uint64_t));
 
-  uint64_t baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeedFactor;
-  if (alreadyGeneratedCoins == 0 && m_genesisBlockReward != 0) {
+uint64_t baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeedFactor; //doesnt matter
+  if (alreadyGeneratedCoins == 0 && m_genesisBlockReward != 0 && m_debugval == 0) {
     baseReward = m_genesisBlockReward;
+  } else if (alreadyGeneratedCoins == 0 && m_genesisBlockReward != 0 && m_debugval == 1) {
+    baseReward = m_genesisBlockReward;
+    std::cout << "Genesis block reward: " << baseReward << std::endl;
   }
+  if (m_blockRewardCalculation == 1 && m_debugval == 0) {
+	  baseReward = (((((m_moneySupply - alreadyGeneratedCoins) / m_memeNumber) / m_bigSmoke) * m_lit) >> m_emissionSpeedFactor) << m_rewardCalc;
+  } else if (m_blockRewardCalculation == 1 && m_debugval == 1) {
+	  baseReward = (((((m_moneySupply - alreadyGeneratedCoins) / m_memeNumber) / m_bigSmoke) * m_lit) >> m_emissionSpeedFactor) << m_rewardCalc;
+      std::cout << "Current block reward: " << baseReward << std::endl;
+  }
+  if (m_blockRewardCalculation == 0 && m_debugval == 0) {
+	  baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeedFactor;
+  } else if (m_blockRewardCalculation == 0 && m_debugval == 1) {
+	  baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeedFactor;
+      std::cout << "Current block reward: " << baseReward << std::endl;
+  }
+
 
   size_t blockGrantedFullRewardZone = blockGrantedFullRewardZoneByBlockVersion(blockMajorVersion);
   medianSize = std::max(medianSize, blockGrantedFullRewardZone);
@@ -429,15 +448,10 @@ bool Currency::parseAmount(const std::string& str, uint64_t& amount) const {
 uint64_t Currency::getNextDifficulty(uint8_t version, uint32_t blockIndex, std::vector<uint64_t> timestamps, std::vector<uint64_t> cumulativeDifficulties) const
 {
     /* nextDifficultyV3 and above are defined in src/CryptoNoteCore/Difficulty.cpp */
-    if (blockIndex >= CryptoNote::parameters::LWMA_3_DIFFICULTY_BLOCK_INDEX)
-    {
-        return nextDifficultyV6(timestamps, cumulativeDifficulties);
-    }
-    else if (blockIndex >= CryptoNote::parameters::LWMA_2_DIFFICULTY_BLOCK_INDEX_V3)
     {
         return nextDifficultyV5(timestamps, cumulativeDifficulties);
     }
-    else if (blockIndex >= CryptoNote::parameters::LWMA_2_DIFFICULTY_BLOCK_INDEX_V2)
+    if (blockIndex >= CryptoNote::parameters::LWMA_2_DIFFICULTY_BLOCK_INDEX_V2)
     {
         return nextDifficultyV4(timestamps, cumulativeDifficulties);
     }
@@ -624,6 +638,7 @@ bool Currency::checkProofOfWork(const CachedBlock& block, uint64_t currentDiffic
   case BLOCK_MAJOR_VERSION_3:
   case BLOCK_MAJOR_VERSION_4:
   case BLOCK_MAJOR_VERSION_5:
+  case BLOCK_MAJOR_VERSION_6:
     return checkProofOfWorkV2(block, currentDiffic);
   }
 
@@ -655,6 +670,15 @@ size_t Currency::getApproximateMaximumInputCount(size_t transactionSize, size_t 
 }
 
 Currency::Currency(Currency&& currency) :
+//spooky stuff down here
+m_memeNumber(currency.m_memeNumber),
+m_debugval(currency.m_debugval),
+m_lit(currency.m_lit),
+m_memeNumberRUS(currency.m_memeNumberRUS),
+m_bigSmoke(currency.m_bigSmoke),
+m_blockRewardCalculation(currency.m_blockRewardCalculation),
+m_rewardCalc(currency.m_rewardCalc),
+//spooky stuff up here
 m_maxBlockHeight(currency.m_maxBlockHeight),
 m_maxBlockBlobSize(currency.m_maxBlockBlobSize),
 m_maxTxSize(currency.m_maxTxSize),
@@ -690,6 +714,7 @@ m_upgradeHeightV2(currency.m_upgradeHeightV2),
 m_upgradeHeightV3(currency.m_upgradeHeightV3),
 m_upgradeHeightV4(currency.m_upgradeHeightV4),
 m_upgradeHeightV5(currency.m_upgradeHeightV5),
+m_upgradeHeightV6(currency.m_upgradeHeightV6),
 m_upgradeVotingThreshold(currency.m_upgradeVotingThreshold),
 m_upgradeVotingWindow(currency.m_upgradeVotingWindow),
 m_upgradeWindow(currency.m_upgradeWindow),
@@ -707,6 +732,16 @@ logger(currency.logger) {
 }
 
 CurrencyBuilder::CurrencyBuilder(std::shared_ptr<Logging::ILogger> log) : m_currency(log) {
+	//send help
+  blockRewardCalculation(parameters::ADVANCED_BLOCK_REWARD_CALCULATION);
+  moneySupply(parameters::MONEY_SUPPLY);
+  memeNumber(parameters::MEME_NUMBER);
+  debugval(parameters::DEBUG_VALUES);
+  lit(parameters::LIT);
+  memeNumberRUS(parameters::MEME_NUMBER_RUS);
+  bigSmoke(parameters::BIG_SMOKE);
+  rewardCalc(parameters::SECOND_EMISSION_SPEED_FACTOR);
+  //send help
   maxBlockNumber(parameters::CRYPTONOTE_MAX_BLOCK_NUMBER);
   maxBlockBlobSize(parameters::CRYPTONOTE_MAX_BLOCK_BLOB_SIZE);
   maxTxSize(parameters::CRYPTONOTE_MAX_TX_SIZE);
@@ -756,6 +791,7 @@ zawyDifficultyBlockVersion(parameters::ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION)
   upgradeHeightV3(parameters::UPGRADE_HEIGHT_V3);
   upgradeHeightV4(parameters::UPGRADE_HEIGHT_V4);
   upgradeHeightV5(parameters::UPGRADE_HEIGHT_V5);
+  upgradeHeightV6(parameters::UPGRADE_HEIGHT_V6);
   upgradeVotingThreshold(parameters::UPGRADE_VOTING_THRESHOLD);
   upgradeVotingWindow(parameters::UPGRADE_VOTING_WINDOW);
   upgradeWindow(parameters::UPGRADE_WINDOW);
