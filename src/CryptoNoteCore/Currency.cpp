@@ -183,10 +183,10 @@ uint64_t baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeed
   }
   if (m_blockRewardCalculation == 1 && m_debugval == 0) {
 	  baseReward = (((((m_moneySupply - alreadyGeneratedCoins) / m_memeNumber) / m_bigSmoke) * m_lit) >> m_emissionSpeedFactor) << m_rewardCalc;
-	  } else if (m_blockRewardCalculation == 1 && m_debugval == 1) {
+  } else if (m_blockRewardCalculation == 1 && m_debugval == 1) {
 	  baseReward = (((((m_moneySupply - alreadyGeneratedCoins) / m_memeNumber) / m_bigSmoke) * m_lit) >> m_emissionSpeedFactor) << m_rewardCalc;
       std::cout << "Current block reward: " << baseReward << std::endl;
-	  }
+  }
   if (m_blockRewardCalculation == 0 && m_debugval == 0) {
 	  baseReward = (m_moneySupply - alreadyGeneratedCoins) >> m_emissionSpeedFactor;
   } else if (m_blockRewardCalculation == 0 && m_debugval == 1) {
