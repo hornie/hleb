@@ -170,7 +170,7 @@ const uint32_t UPGRADE_HEIGHT_V2                             = 1;
 const uint32_t UPGRADE_HEIGHT_V3                             = 2;
 const uint32_t UPGRADE_HEIGHT_V4                             = 3; // Upgrade height for CN-Lite Variant 1 switch.
 const uint32_t UPGRADE_HEIGHT_V5                             = 4; // Upgrade height for CN-Turtle Variant 2 switch.
-const uint32_t UPGRADE_HEIGHT_V6                             = 5; // Upgrade height for CN-Soft-Shell-HLEB Variant 2 switch.
+const uint32_t UPGRADE_HEIGHT_V6                             = 72000; // Upgrade height for CN-Soft-Shell Variant 2 switch.
 const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V6;
 
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
@@ -192,9 +192,7 @@ const uint64_t FORK_HEIGHTS[] =
     7, // 7
     8, // 8
     9, // 9
-    10, // 10
-    1400000, // 11
-    2000000, // 12
+    72000, // 10
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
