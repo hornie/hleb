@@ -66,7 +66,7 @@ const Crypto::Hash& CachedBlock::getBlockLongHash() const {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
       cn_lite_slow_hash_v1(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
-    } else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && CryptoNote::parameters::DEBUG_VALUES == 0) {
+    } else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && block.majorVersion < BLOCK_MAJOR_VERSION_6 && CryptoNote::parameters::DEBUG_VALUES == 0) {
       const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
       blockLongHash = Hash();
       cn_turtle_lite_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
@@ -94,7 +94,7 @@ const Crypto::Hash& CachedBlock::getBlockLongHash() const {
 		cn_lite_slow_hash_v1(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
 		std::cout << "Now using " << "cn_lite_slow_hash_v1: " << cn_slow_hash_v2 << std::endl;
 	}
-	else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && CryptoNote::parameters::DEBUG_VALUES == 1) {
+	else if (block.majorVersion == BLOCK_MAJOR_VERSION_5 && block.majorVersion < BLOCK_MAJOR_VERSION_6 && CryptoNote::parameters::DEBUG_VALUES == 1) {
 		const auto& rawHashingBlock = getParentBlockHashingBinaryArray(true);
 		blockLongHash = Hash();
 		cn_turtle_lite_slow_hash_v2(rawHashingBlock.data(), rawHashingBlock.size(), blockLongHash.get());
